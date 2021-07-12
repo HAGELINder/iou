@@ -60,6 +60,10 @@ def view(category=None):
     return total_amount, results
 
 
+if __name__ == '__main__':
+    init()
+
+
 iou_amount = input("Hur mycket pengar (sek): ")
 iou_amount = iou_amount.replace(" ", "")
 iou_amount = int(iou_amount)
@@ -69,8 +73,6 @@ print()
 # view_cat = input("Vilken kategori vill du se? Enter för alla: ") or "*"
 log(iou_amount, iou_category, iou_meddelande)
 
-if __name__ == '__main__':
-    init()
 
 
 saved = view()
@@ -84,4 +86,5 @@ cur = con.cursor()
 view_cat = input("Vilken kategori vill du se? Enter för alla: ") or "*"
 for row in cur.execute(f'select {view_cat} from expenses order by date desc'):
     print(row)
+
 
