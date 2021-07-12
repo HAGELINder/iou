@@ -84,7 +84,5 @@ print()
 con = db.connect("iou.db")
 cur = con.cursor()
 view_cat = input("Vilken kategori vill du se? Enter för alla: ") or "*"
-for row in cur.execute(f'select {view_cat} from expenses order by date desc'):
+for row in cur.execute(f"select * from expenses where category = '{view_cat}' order by date desc"):
     print(row)
-
-
