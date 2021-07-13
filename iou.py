@@ -18,7 +18,7 @@ def init():
     con.close()
 
 
-def log(amount, category, message=""):
+def log(amount, category, message="---"):
     date = str(datetime.now())
     con = db.connect("iou.db")
     cur = con.cursor()
@@ -56,13 +56,12 @@ def view(category=None):
     results = cur.fetchall()
     cur.execute(sql2)
     total_amount = cur.fetchone()[0]
-    
+
     return total_amount, results
 
 
 if __name__ == '__main__':
     init()
-
 
 iou_amount = input("Hur mycket pengar (sek): ")
 iou_amount = iou_amount.replace(" ", "")
@@ -73,8 +72,6 @@ print()
 # view_cat = input("Vilken kategori vill du se? Enter för alla: ") or "*"
 log(iou_amount, iou_category, iou_meddelande)
 
-
-
 saved = view()
 print()
 print(f'Total skuld: {saved[0]}kr')
@@ -83,6 +80,18 @@ print()
 
 con = db.connect("iou.db")
 cur = con.cursor()
-view_cat = input("Vilken kategori vill du se? Enter för alla: ") or "*"
+view_cat = input("Vilken kategori vill du se? Enter för alla: ")
+view_cat = view_cat.lower()
+
+
 for row in cur.execute(f"select * from expenses where category = '{view_cat}' order by date desc"):
     print(row)
+print()
+print("Alla transaktioner:")
+print()
+for row in cur.execute("select * from expenses order by date desc"):
+    print(row)
+
+# Summera bara valda kategorin
+# Koppla till hemsida
+# Logga in för att använda
